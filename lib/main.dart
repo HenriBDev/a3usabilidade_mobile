@@ -4,15 +4,11 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(
-    MyApp(
-      bairros: List<String>.generate(10000, (i) => 'Item $i'),
-    ),
+    MyApp(),
   );
 }
 
 class MyApp extends StatelessWidget {
-  final List<String> bairros;
-  const MyApp({super.key, required this.bairros});
 
   // This widget is the root of your application.
   @override
@@ -32,8 +28,40 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class DropdownFiltro extends StatefulWidget{
+  const DropdownFiltro({super.key});
+
+  @override
+  State<DropdownFiltro> createState() => _DropdownFiltroState();
+}
+
+class _DropdownFiltroState extends State<DropdownFiltro> {
+  String dropdownValue = "Logradouros";
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton<String>(
+      value: dropdownValue,
+      onChanged: (String? value) {
+        setState(() {
+          dropdownValue = value!;
+        });
+      },
+      items: <DropdownMenuItem<String>>[
+        DropdownMenuItem<String>(
+          value: "Logradouros",
+          child: Text("Logradouros"),
+        ),
+        DropdownMenuItem<String>(
+          value: "Bairros",
+          child: Text("Bairros"),
+        )],
+    );
+  }
+}
+
 class TelaPrincipal extends StatelessWidget {
-  TelaPrincipal({Key? key}): super(key: key);
+  List<String> bairros = <String>['Teste', 'Teste'];
 
   @override
   Widget build(BuildContext context) {
@@ -43,29 +71,25 @@ class TelaPrincipal extends StatelessWidget {
       ),
       body: Center(
 
-          // colocar coisas da pagina central aqui
+        // colocar coisas da pagina central aqui
 
-          ),
+      ),
       drawer: Drawer(child: _criarMenuDrawer(context)),
     );
   }
 
   Widget _criarMenuDrawer(BuildContext context) {
-    final List<String> bairros;
     return ListView(
-      // ignore: prefer_const_literals_to_create_immutables
       children: [
         ListTile(
-          leading: Icon(Icons.house),
-          title: Text("Bairros", style: TextStyle(fontSize: 25)),
+          title: DropdownFiltro()
         ),
         ListView.builder(
+          shrinkWrap: true,
+          physics: ClampingScrollPhysics(),
           itemCount: bairros.length,
-          prototypeItem: ListTile(
-            title: Text(bairros.first),
-          ),
           itemBuilder: (context, index) {
-            return ListTile( 
+            return ListTile(
               leading: Icon(Icons.square),
               title: Text(bairros[index]),
             );
@@ -74,6 +98,6 @@ class TelaPrincipal extends StatelessWidget {
       ],
     );
   }
-
+}
 
 //onTap: ()=> widget.scaffoldKey.currentState.openDrawer(),
