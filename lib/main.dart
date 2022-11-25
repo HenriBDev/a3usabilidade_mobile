@@ -179,7 +179,7 @@ class TelaSecundaria extends StatelessWidget {
       ),
       body: Center(
         child: Text(
-          'Trabalho desenvolvido por:\nGilberto de Melo Junior\nHenrique Barbosa\nMarcus Gustavo Sigrist Romão',
+          'Trabalho desenvolvido por:\nGilberto de Melo Junior\nHenrique Barbosa\nMarcus Gustavo Oliveira Sigrist Romão',
           textAlign: TextAlign.center,
           style: const TextStyle(
               fontWeight: FontWeight.bold,
